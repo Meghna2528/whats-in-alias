@@ -1,0 +1,52 @@
+<html>
+  <body>
+    <h1>Add url to be shortened</h1>
+    <form method="POST" action="/">
+      <label for="original_url">Original </label>
+      <input type="url" name="original_url" required><br>
+      <br>
+      <label for="shortened_url">Alias </label>
+      <input type="text" name="shortened_url" required>
+      <br>
+      <input type="submit" value="Generate Alias">
+    </form>
+
+    <h2>Aliases</h2>
+    <table>
+      <style>
+      table, th, td {
+        border: 1px solid black;
+      }
+    </style>
+      <tr>
+        <th>Original </th>
+        <th> Alias </th>
+        <th> Update </th>
+        <th> Delete </th>
+      </tr>
+      {% for url in urls %}
+        <tr>
+          <td>
+            {{url.original_url}}
+          </td>
+          <td>
+            {{url.shortened_url}}
+          </td>
+          <td>
+            <form method="POST" action="./update" style="display: inline">
+              <input type="hidden" value="{{url.original_url}}" name="original_url">
+              <input type="text" name="new_shortened_url" required>
+              <input type="submit" value="Update">
+            </form>
+          </td>
+          <td>
+            <form method="POST" action="./delete" style="display: inline">
+              <input type="hidden" value="{{url.original_url}}" name="original_url">
+              <input type="submit" value="Delete">
+            </form>
+          </td>
+        </tr>
+      {% endfor %}
+    </table>
+  </body>
+</html>
